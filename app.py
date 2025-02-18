@@ -3,9 +3,10 @@ import numpy as np
 from flask import Flask, render_template, Response, jsonify, request, session, redirect, url_for
 import random
 import string
+import os
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key"  # Security for session management
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "fallback-secret-key")  # Security for session management
 
 # Dummy employee credentials (temporary)
 employees = {
@@ -18,7 +19,7 @@ def generate_employee_id():
 
 @app.route("/", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
+    if request.method == "POST"]:
         employee_id = request.form["employee_id"]
         password = request.form["password"]
 
@@ -86,4 +87,5 @@ def capture():
     return jsonify({"status": "error", "message": "Failed to Capture"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.getenv("PORT", 10000))  # Render dynamically assigns a port
+    app.run(host="0.0.0.0", port=port, debug=True)
