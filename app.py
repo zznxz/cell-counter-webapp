@@ -19,7 +19,7 @@ def generate_employee_id():
 
 @app.route("/", methods=["GET", "POST"])
 def login():
-    if request.method == "POST"]:
+    if request.method == "POST":
         employee_id = request.form["employee_id"]
         password = request.form["password"]
 
