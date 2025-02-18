@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell Counting</title>
+</head>
+<body>
+    <h2>Live Camera Feed</h2>
+    <img src="{{ url_for('video_feed') }}" width="640" height="480">
+    <br>
+    <button onclick="captureImage()">Start Image Capturing & Cell Counting</button>
+
+    <script>
+        function captureImage() {
+            fetch('/capture')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "blurry") {
+                        alert("⚠ " + data.message);
+                    } else if (data.status === "success") {
+                        alert("✅ " + data.message);
+                    } else {
+                        alert("❌ Error: " + data.message);
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
